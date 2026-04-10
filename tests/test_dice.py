@@ -16,6 +16,7 @@ class TestRollDice(unittest.TestCase):
         result = roll_dice("3d20+10")
         self.assertGreaterEqual(result["total"], 13)
         self.assertLessEqual(result["total"], 70)
+
     def test_invalid_notation(self):
         with self.assertRaises(ValueError):
             roll_dice("abc")
