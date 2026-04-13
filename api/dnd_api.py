@@ -2,6 +2,11 @@ import requests
 
 
 
+def get_all_spells():
+    response = requests.get(f"https://www.dnd5eapi.co/api/2014/spells")
+    data = response.json()
+    return [item["index"] for item in data["results"]]
+
 
 def get_spell(spell_choice):
     response = requests.get(f"https://www.dnd5eapi.co/api/2014/spells/{spell_choice}")
@@ -15,6 +20,6 @@ def get_spell(spell_choice):
 
 
 if __name__ == '__main__':
-    spell_choice = input("Enter a spell choice: ")
-    spell = get_spell(spell_choice)
-    print(spell)
+    indices = get_all_spells()
+    print(f"Gefunden: {len(indices)} Zauber")
+    print(indices[:5])

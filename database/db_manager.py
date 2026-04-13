@@ -24,6 +24,18 @@ class DnDDatabase:
             )
             """
         )
+        self.cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS spells (
+                spell_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                api_index TEXT UNIQUE NOT NULL,
+                spell_name TEXT NOT NULL,
+                spell_level INTEGER,
+                spell_school TEXT,
+                description TEXT
+            )
+            """
+        )
         self.connection.commit()
 
 
@@ -65,11 +77,24 @@ class DnDDatabase:
     def close_connection(self):
         self.connection.close()
 
+
+    def add_spell(self, api_index, spell_name, spell_level, spell_school, description):
+        """ Adds a spell to the database """
+        self.cursor.execute(
+            """ INSERT OR REPLACE INTO spells (api_index, spell_name, spell_level, spell_school, description)
+            Values (?, ?, ?, ?, ?)""",
+            (api_index, spell_name, spell_level, spell_school, description)
+        )
+        self.connection.commit()
+        return self.cursor.lastrowid
+
+
+
 if __name__ == "__main__":
     db = DnDDatabase()
-    db.add_character("Aragorn", "Ranger", "Human", 1, 10, 10)
+    """db.add_character("Aragorn", "Ranger", "Human", 1, 10, 10)
     db.add_character("Legolas", "Ranger", "Elf", 3)
-    db.add_character("Gimli", "Fighter", "Dwarf", 4, 35, 18)
+    db.add_character("Gimli", "Fighter", "Dwarf", 4, 35, 18)"""
     for character in db.get_all_characters():
         print(f"{character['char_name']} (Level {character['char_level']}) -  {character['char_class']}, {character['char_race']}")
     db.close_connection()
