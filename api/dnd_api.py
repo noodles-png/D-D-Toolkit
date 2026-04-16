@@ -41,5 +41,27 @@ class DnDApiClient:
         return [monster["index"] for monster in data["results"]]
 
 
+    def get_all_classes(self):
+        response = self.session.get(f"{self.BASE_URL}/classes")
+        data = response.json()
+        return [item["index"] for item in data["results"]]
+
+
+    def get_class(self, api_index):
+        response = self.session.get(f"{self.BASE_URL}/classes/{api_index}")
+        return response.json()
+
+
+    def get_all_races(self):
+        response = self.session.get(f"{self.BASE_URL}/races")
+        data = response.json()
+        return [race["index"] for race in data["results"]]
+
+
+    def get_race(self, race_index):
+        response = self.session.get(f"{self.BASE_URL}/races/{race_index}")
+        return response.json()
+
+
 if __name__ == '__main__':
     pass

@@ -16,13 +16,12 @@ characters without relying on too many different apps.
 ## Features
 - Dice Roller 
 - Management System for characters
-- 
+- Spell database
+- Database for created characters
 
 ## Upcoming Features
-- Spell database
 - GUI
 - extended Dice parser
-- Database for created characters
 - data visualization
 - PDF-export
 - Initiative Tracker

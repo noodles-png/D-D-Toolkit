@@ -102,7 +102,31 @@ class DnDDatabase:
             )
             """
         )
+        self.cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS classes (
+                class_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                api_index TEXT UNIQUE NOT NULL,
+                class_name TEXT NOT NULL,
+                hit_die INTEGER,
+                description TEXT
+            )
+            """
+        )
+        self.cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS races (
+                race_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                api_index TEXT UNIQUE NOT NULL,
+                race_name TEXT NOT NULL,
+                speed INTEGER,
+                size TEXT,
+                description TEXT
+            )
+            """
+        )
         self.connection.commit()
+
 
     def add_character(self, char_name, char_class, char_race, char_level=1, max_hp=None, armor_class=None):
         """ Adds a character to the database """
@@ -212,6 +236,28 @@ class DnDDatabase:
         )
         self.connection.commit()
 
+
+    def add_class(self, api_index, class_name, hit_die, description):
+        """ Adds a class to a character """
+        self.cursor.execute(
+            """
+            INSERT OR REPLACE INTO classes(api_index, class_name, hit_die, description) VALUES (?, ?, ?, ?)
+            """,
+            (api_index, class_name, hit_die, description)
+        )
+        self.connection.commit()
+
+
+    def add_race(self, api_index, race_name, speed, size, description):
+        """ Adds a race to a character """
+        self.cursor.execute(
+            """
+            INSERT OR IGNORE INTO races(api_index, race_name, speed, size, description)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (api_index, race_name, speed, size, description)
+        )
+        self.connection.commit()
 
 
 
