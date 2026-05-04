@@ -2,6 +2,9 @@ import customtkinter as ctk
 from database.db_manager import DnDDatabase
 
 class CharacterTab:
+    STATS = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"]
+    STAT_VALUES = [str(i) for i in range(1, 21)]
+
     def __init__(self, parent):
         self.db = DnDDatabase()
         
@@ -66,20 +69,19 @@ class CharacterTab:
         self.stats_frame = ctk.CTkFrame(self.tab)
         self.stats_frame.grid(row=4, column=0, columnspan=4, pady=10, sticky="w")
 
-        stats_left = ["Strength", "Dexterity", "Constitution"]
-        stats_right = ["Intelligence", "Wisdom", "Charisma"]
-        stat_values = [str(i) for i in range(1,21)]
+        stats_left = self.STATS[:3]
+        stats_right = self.STATS[3:]
         self.stat_entries = {}
 
         for i, stat in enumerate(stats_left):
             ctk.CTkLabel(self.stats_frame, text=stat).grid(row=i, column=0, padx=5, pady=5, sticky="w")
-            entry = ctk.CTkComboBox(self.stats_frame, values=stat_values, width=70)
+            entry = ctk.CTkComboBox(self.stats_frame, values=self.STAT_VALUES, width=70)
             entry.grid(row=i, column=1, padx=5, pady=3)
             self.stat_entries[stat.lower()] = entry
 
         for i, stat in enumerate(stats_right):
             ctk.CTkLabel(self.stats_frame, text=stat).grid(row=i, column=2, padx=5, pady=5, sticky="w")
-            entry = ctk.CTkComboBox(self.stats_frame, values=stat_values, width=70)
+            entry = ctk.CTkComboBox(self.stats_frame, values=self.STAT_VALUES, width=70)
             entry.grid(row=i, column=3, padx=5, pady=3)
             self.stat_entries[stat.lower()] = entry
 
@@ -112,31 +114,11 @@ class CharacterTab:
         # Saves
         ctk.CTkLabel(self.tab, text="Saving Throws").grid(row=4, column=0, padx=5, pady=5, sticky="ew")
 
-        ctk.CTkLabel(self.tab, text="Strength").grid(row=5, column=0, padx=5, pady=5, sticky="ew")
-        str_save_entry = ctk.CTkEntry(self.tab, width=20).grid(row=5, column=1, padx=5, sticky="ew")
-        str_prof = ctk.CTkCheckBox(self.tab, text="").grid(row=5, column=2, padx=5, pady=5, sticky="ew")
-
-        ctk.CTkLabel(self.tab, text="Dexterity").grid(row=6, column=0, padx=5, pady=5, sticky="ew")
-        dex_save_entry = ctk.CTkEntry(self.tab, width=20).grid(row=6, column=1, padx=5, sticky="ew")
-        dex_prof = ctk.CTkCheckBox(self.tab, text="").grid(row=6, column=2, padx=5, pady=5, sticky="ew")
-
-        ctk.CTkLabel(self.tab, text="Constitution").grid(row=7, column=0, padx=5, pady=5, sticky="ew")
-        con_save_entry = ctk.CTkEntry(self.tab, width=20).grid(row=7, column=1, padx=5, sticky="ew")
-        con_prof = ctk.CTkCheckBox(self.tab, text="").grid(row=7, column=2, padx=5, pady=5, sticky="ew")
-
-        ctk.CTkLabel(self.tab, text="Intelligence").grid(row=8, column=0, padx=5, pady=5, sticky="ew")
-        int_save_entry = ctk.CTkEntry(self.tab, width=20).grid(row=8, column=1, padx=5, sticky="ew")
-        int_prof = ctk.CTkCheckBox(self.tab, text="").grid(row=8, column=2, padx=5, sticky="ew")
-
-        ctk.CTkLabel(self.tab, text="Wisdom").grid(row=9, column=0, padx=5, pady=5, sticky="ew")
-        wis_save_entry = ctk.CTkEntry(self.tab, width=20).grid(row=9, column=1, padx=5, sticky="ew")
-        wis_prof = ctk.CTkCheckBox(self.tab, text="").grid(row=9, column=2, padx=5, sticky="ew")
-
-        ctk.CTkLabel(self.tab, text="Charisma").grid(row=10, column=0, padx=5, pady=5, sticky="ew")
-        cha_save_entry = ctk.CTkEntry(self.tab, width=20).grid(row=10, column=1, padx=5, sticky="ew")
-        cha_prof = ctk.CTkCheckBox(self.tab, text="").grid(row=10, column=2, padx=5, sticky="ew")
-
-
+        for i, stat in enumerate(self.STATS):
+            ctk.CTkLabel(self.tab, text=stat).grid(row=5+i, column=0, padx=5, pady=5, sticky="ew")
+            stat_entry = ctk.CTkEntry(self.tab, width=20).grid(row=5+i, column=1, padx=5, sticky="ew")
+            stat_prof = ctk.CTkCheckBox(self.tab, text="")
+            stat_prof.grid(row=5+i, column=2, padx=5, pady=5, sticky="ew")
 
 
     def build_skills_tab(self): # TODO Skills mit Prof bonus checkboxen
