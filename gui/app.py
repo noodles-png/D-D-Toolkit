@@ -4,6 +4,8 @@ from customtkinter import CTkImage
 from PIL import Image
 from utils.helpers import get_asset
 from gui.character_tab import CharacterTab
+from gui.spells_tab import SpellsTab
+from gui.MonstersTab import MonstersTab
 
 
 class App(ctk.CTk):
@@ -32,6 +34,8 @@ class App(ctk.CTk):
 
         CharacterTab(self.tabs.tab("Characters"))
         DiceTab(self.tabs.tab("Dice Roller"))
+        SpellsTab(self.tabs.tab("Spells"))
+        MonstersTab(self.tabs.tab("Monsters"))
 
 class DiceTab:
     def __init__(self, parent):
