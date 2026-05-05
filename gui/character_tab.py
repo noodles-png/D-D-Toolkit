@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from database.db_manager import DnDDatabase
+from utils.helpers import get_modifier
 
 class CharacterTab:
     STATS = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"]
@@ -35,7 +36,7 @@ class CharacterTab:
             btn = ctk.CTkButton(
                 self.char_list,
                 text=char["char_name"],
-                command=lambda c=char: self.load_character(c)
+                command=lambda c=char: self.load_character(c) # Lambda calls load_character only on click
             )
             btn.pack(fill="x", pady=2)
 
@@ -73,7 +74,7 @@ class CharacterTab:
         stats_right = self.STATS[3:]
         self.stat_entries = {}
 
-        for i, stat in enumerate(stats_left):
+        for i, stat in enumerate(stats_left): # TODO: command=lambda to update values with the dropdown (also right)
             ctk.CTkLabel(self.stats_frame, text=stat).grid(row=i, column=0, padx=5, pady=5, sticky="w")
             entry = ctk.CTkComboBox(self.stats_frame, values=self.STAT_VALUES, width=70)
             entry.grid(row=i, column=1, padx=5, pady=3)
@@ -84,6 +85,14 @@ class CharacterTab:
             entry = ctk.CTkComboBox(self.stats_frame, values=self.STAT_VALUES, width=70)
             entry.grid(row=i, column=3, padx=5, pady=3)
             self.stat_entries[stat.lower()] = entry
+
+        # Modifier list
+        str_modifier = get_modifier(self.stat_entries["strength"].get())
+        dex_modifier = get_modifier(self.stat_entries["dexterity"].get())
+        con_modifier = get_modifier(self.stat_entries["constitution"].get())
+        int_modifier = get_modifier(self.stat_entries["intelligence"].get())
+        wis_modifier = get_modifier(self.stat_entries["wisdom"].get())
+        cha_modifier = get_modifier(self.stat_entries["charisma"].get())
 
     def build_combat_tab(self):
         self.tab = self.editor_tabs.tab("Combat")
@@ -114,11 +123,14 @@ class CharacterTab:
         # Saves
         ctk.CTkLabel(self.tab, text="Saving Throws").grid(row=4, column=0, padx=5, pady=5, sticky="ew")
 
+
+
         for i, stat in enumerate(self.STATS):
             ctk.CTkLabel(self.tab, text=stat).grid(row=5+i, column=0, padx=5, pady=5, sticky="ew")
-            stat_entry = ctk.CTkEntry(self.tab, width=20).grid(row=5+i, column=1, padx=5, sticky="ew")
-            stat_prof = ctk.CTkCheckBox(self.tab, text="")
-            stat_prof.grid(row=5+i, column=2, padx=5, pady=5, sticky="ew")
+            ctk.CTkLabel(
+                self.tab,text=get_modifier(self.stat_entries[stat.lower()].get())
+            ).grid(row=5+i, column=1, padx=5, pady=5, sticky="ew")
+            ctk.CTkCheckBox(self.tab, text="").grid(row=5+i, column=2, padx=5, sticky="ew")
 
 
     def build_skills_tab(self): # TODO Skills mit Prof bonus checkboxen
