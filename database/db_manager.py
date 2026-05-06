@@ -240,6 +240,9 @@ class DnDDatabase:
         )
         self.connection.commit()
 
+    def get_monster_by_cr(self, challenge_rating):
+        self.cursor.execute("SELECT * FROM monsters WHERE challenge_rating = ?", (challenge_rating,))
+        return self.cursor.fetchall()
 
     def add_class(self, api_index, class_name, hit_die, description):
         """ Adds a class to a character """

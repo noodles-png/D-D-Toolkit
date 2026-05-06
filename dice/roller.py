@@ -20,6 +20,7 @@ def roll_dice(notation: str) -> dict:
     dice_type = int(match.group(2))
     dice_mod = int(match.group(3)) if match.group(3) else 0
 
+    # TODO: compare with other randomizer (numpy e.g.)
     rolls = [random.randint(1, dice_type) for _ in range(num_dice)]
     total = sum(rolls) + dice_mod
 
