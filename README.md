@@ -7,6 +7,7 @@ characters without relying on too many different apps.
 ## Prerequisites
 
 Python 3.9 or newer
+Internet access for initial Database creation
 
 ## Installation
 
@@ -18,8 +19,9 @@ Python 3.9 or newer
 - Dice Roller 
 - Management System for characters
 - Spell database
+- Monster database
 - Database for created characters
-- GUI
+- GUI 
 
 ## Upcoming Features
 - Extended Dice parser
@@ -27,11 +29,16 @@ Python 3.9 or newer
 - PDF-export
 - Initiative Tracker
 - KI-NPC-Generator 
-- Mobile App version
-- Docker Containerization
+- Mobile App version 
+- Web version
+- Docker & Deployment
+- Multi-User with Login
+- NPC Generator via LLM API
 - 
 
-## Tech stack
+## Tech stack 
+- Python
+- SQL (SQLite3)
 
 
 ## License
