@@ -37,7 +37,7 @@ class CollapsibleSection:
         self.title = title
         self.is_open = False
 
-        self.header_btn = ctk.CTkButton(parent, text=f"▶ {title}", command=self.toggle_button)
+        self.header_btn = ctk.CTkButton(parent, text=f"▶ {title}", command=self.toggle_button, fg_color="#222222")
         self.header_btn.pack(fill="x", pady=2)
 
         self.content = ctk.CTkFrame(parent)
@@ -46,7 +46,7 @@ class CollapsibleSection:
         self.is_open = not self.is_open
 
         if self.is_open:
-            self.content.pack()
+            self.content.pack(fill="x", after=self.header_btn)
             self.header_btn.configure(text=f"▼ {self.title}")
         else:
             self.content.pack_forget()
